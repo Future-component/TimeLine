@@ -24,6 +24,9 @@
 * 9.如何实现快放
 
 ### Example
+[项目地址：https://future-component.github.io/TimeLine/](https://future-component.github.io/TimeLine/)
+[演示地址：https://future-component.github.io/TimeLine/example/index.html](https://future-component.github.io/TimeLine/example/index.html)
+[GitHub地址：https://github.com/Future-component/TimeLine](https://github.com/Future-component/TimeLine)
 
 ### 实例代码
 ```js
