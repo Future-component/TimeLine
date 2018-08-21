@@ -5,6 +5,7 @@
 ![](./assets/live-classroom.png)
 
 ### 截屏
+![](./assets/screen.png)
 
 ### 解决的问题
 * 1.和时间本身无关，就是要相互同步执行；
@@ -23,6 +24,78 @@
 * 9.如何实现快放
 
 ### Example
+
+### 实例代码
+```js
+var timeline = TimeLine();
+console.log(timeline)
+var timeStart = (new Date()).getTime();
+
+function logger(val, style) {
+  $('#message').append(`<p style="${style}">${val}</p>`);
+}
+
+timeline.init({
+  data: [{
+    eventType: 'ppt',
+    startTime: timeStart + 1000,
+    data: 'ppt第一页'
+  }, {
+    eventType: 'text',
+    startTime: timeStart + 3000,
+    data: '第一条消息',
+  }, {
+    eventType: 'text',
+    startTime: timeStart + 2000,
+    data: '第二条消息',
+  }, {
+    eventType: 'audio',
+    startTime: timeStart + 5000,
+    data: '我是音乐'
+  }, {
+    eventType: 'audio',
+    startTime: timeStart + 12000,
+    data: '我是音乐2'
+  }],
+}, {
+  text: function(val) { logger('%c *** text ***:' + JSON.stringify(val), 'color: #2196F3') },
+  audio: function(val) { logger('%c *** audio ***:' + JSON.stringify(val), 'color: #009688') },
+}, function() {
+  $('#message').html('');
+});
+
+timeline.complete(function() {
+  logger('%c 播放结束啦~~~~', 'color: #9C27B0');
+  $('.btn').removeClass('active');
+})
+
+timeline.progress(function(data) {
+  var dataTmp = JSON.parse(data);
+  logger('%c 当前进度：' + data, 'color: #CDDC39');
+  $('#currentTime').text(dataTmp.currentTime);
+  $('#totalTime').text(dataTmp.totalTime);
+});
+
+$('.btn').click(function() {
+  var id = $(this).attr('id');
+  $('.btn').removeClass('active');
+  $(this).addClass('active');
+
+  switch(id) {
+    case 'play':
+      timeline.play();
+      break;
+    case 'pause':
+      timeline.pause();
+      break;
+    case 'stop':
+      timeline.stop();
+      break;
+    default:
+      break;
+  }
+});
+```
 
 ### AIP
 

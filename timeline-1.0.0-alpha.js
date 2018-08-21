@@ -30,6 +30,8 @@
 })(this, (function() {
   'use strict';
 
+  var Version = 'timeline-1.0.0-alpha';
+
   var _typeof = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? function (obj) {
     return typeof obj;
   } : function (obj) {
@@ -807,9 +809,10 @@
     }
 
     var worker = null;
+    var workerUrl = window.location.href.replace(Version + 'js', '')
 
     function startWorker() {
-      worker = new Worker('/workerScript.js');
+      worker = new Worker(workerUrl + 'workerScript.js');
       // 接收从线程中传出的计算结果
       worker.onmessage = function(event) {
         // console.log('worker-message', event.data);
