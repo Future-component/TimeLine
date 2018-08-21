@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>TimeLine</title>
+  <style id="css">
+    .time-step:hover {
+      background: #ccc;
+    }
+    #time {
+      height: 20px;
+    }
+
+    .active {
+      background: aqua;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="time"></div>
+  <div id="app">
+    <button id="play" class="btn active">播放</button>
+    <button id="pause" class="btn">暂停</button>
+    <button id="stop" class="btn">停止</button>
+    <button id="currentTime">0秒</button><button id="totalTime">0秒</button>
+  </div>
+  <div id="message"></div>
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
+  <!-- <script src="./js/music.js?t=5"></script> -->
+  <script src="/timeline-1.0.0-alpha.js"></script>
+  <script>
+    var timeline = TimeLine();
+    console.log(timeline)
+    var timeStart = (new Date()).getTime();
+
+    function logger(val, style) {
+      $('#message').append(`<p style="${style}">${val}</p>`);
+    }
+
+    timeline.init({
+      data: [{
+        eventType: 'ppt',
+        startTime: timeStart + 1000,
+        data: 'ppt第一页'
+      }, {
+        eventType: 'text',
+        startTime: timeStart + 3000,
+        data: '第一条消息',
+      }, {
+        eventType: 'text',
+        startTime: timeStart + 2000,
+        data: '第二条消息',
+      }, {
+        eventType: 'audio',
+        startTime: timeStart + 5000,
+        data: '我是音乐'
+      }, {
+        eventType: 'audio',
+        startTime: timeStart + 12000,
+        data: '我是音乐2'
+      }],
+    }, {
+      text: function(val) { logger('%c *** text ***:' + JSON.stringify(val), 'color: #2196F3') },
+      audio: function(val) { logger('%c *** audio ***:' + JSON.stringify(val), 'color: #009688') },
+    }, function() {
+      $('#message').html('');
+    });
+
+    timeline.complete(function() {
+      logger('%c 播放结束啦~~~~', 'color: #9C27B0');
+      $('.btn').removeClass('active');
+    })
+
+    timeline.progress(function(data) {
+      var dataTmp = JSON.parse(data);
+      logger('%c 当前进度：' + data, 'color: #CDDC39');
+      $('#currentTime').text(dataTmp.currentTime);
+      $('#totalTime').text(dataTmp.totalTime);
+    });
+
+    $('.btn').click(function() {
+      var id = $(this).attr('id');
+      $('.btn').removeClass('active');
+      $(this).addClass('active');
+
+      switch(id) {
+        case 'play':
+          timeline.play();
+          break;
+        case 'pause':
+          timeline.pause();
+          break;
+        case 'stop':
+          timeline.stop();
+          break;
+        default:
+          break;
+      }
+    });
+
+</script>
+</body>
+</html>
