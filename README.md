@@ -106,12 +106,12 @@ $('.btn').click(function() {
 
 函数名 | 参数 | 含义 |
 :----|:---|:----
-init | {options<Object>, actions<Object-Func>, initPage<Func>} | 初始化时间轴，以及事件在时间轴上的对齐 |
-progress | <Func> | 时间轴的当前进度 |
+init | {options(Object), actions(Object-Func), initPage(Func)} | 初始化时间轴，以及事件在时间轴上的对齐 |
+progress | (Func) | 时间轴的当前进度 |
 pause | Empty | 暂停时间轴播放 |
 stop | Empty | 停止时间轴播放，播放状态回到起点位置 |
 play | Empty | 继续播放 |
-complete | <Func> | 时间轴完成的回调 |
+complete | (Func) | 时间轴完成的回调 |
 
 ### TODO
 * 资源加载慢的优化问题
